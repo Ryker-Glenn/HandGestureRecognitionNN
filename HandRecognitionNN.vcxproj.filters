@@ -18,5 +18,13 @@
     <ClCompile Include="HandRecognitionNN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\NeuralNetwork\NeuralNetwork\NN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\NeuralNetwork\NeuralNetwork\NN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
