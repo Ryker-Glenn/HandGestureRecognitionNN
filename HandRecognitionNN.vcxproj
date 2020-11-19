@@ -142,10 +142,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\NeuralNetwork\NeuralNetwork\NN.cpp" />
+    <ClCompile Include="Gesture.cpp" />
     <ClCompile Include="HandRecognitionNN.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NeuralNetwork\NeuralNetwork\NN.h" />
+    <ClInclude Include="Gesture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,9 +21,15 @@
     <ClCompile Include="..\NeuralNetwork\NeuralNetwork\NN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gesture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NeuralNetwork\NeuralNetwork\NN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gesture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
