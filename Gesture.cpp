@@ -1,12 +1,11 @@
 #include "Gesture.h"
 
-Gesture::Gesture() {
-}
+Gesture::Gesture() {}
 
 void Gesture::capture() {
 	Mat frame, fgMask, fgBlur, fgThresh;
 	Ptr<BackgroundSubtractor> pBackSub;
-	pBackSub = createBackgroundSubtractorMOG2(false);			// trained NN from OpenCV used to remove everything not moving in the background
+	pBackSub = createBackgroundSubtractorMOG2();			// trained NN from OpenCV used to remove everything not moving in the background
 	cap.open(0);												// Open webcam
 	while (true) {
 		cap >> frame;
@@ -17,7 +16,7 @@ void Gesture::capture() {
 		for (int i = 1; i < MAX_KERNEL_LENGTH; i += 2)
 			medianBlur(fgMask, fgBlur, i);						// For the kernel size, apply opencv's median blur function to frame with removed
 																// background
-		threshold(fgBlur, fgThresh, 0, MAX_BV, BI);				// apply binary inverted threshold to the blurred frame
+		threshold(fgMask, fgThresh, 0, MAX_BV, BI);				// apply binary inverted threshold to the blurred frame
 		imshow("BI Blur FG Mask", fgThresh);
 		// show video frame-by-frame
 		//get the input from the keyboard
