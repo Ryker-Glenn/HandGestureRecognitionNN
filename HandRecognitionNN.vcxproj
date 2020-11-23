@@ -147,7 +147,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NeuralNetwork\NeuralNetwork\NN.h" />
+    <ClInclude Include="F:\OpenCV\dep\opencv_contrib\modules\optflow\include\opencv2\optflow.hpp" />
     <ClInclude Include="Gesture.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HandRecognitionNN.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="F:\OpenCV\build\x64\vc15\lib\opencv_optflow450d.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

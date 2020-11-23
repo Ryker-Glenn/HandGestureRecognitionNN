@@ -32,5 +32,21 @@
     <ClInclude Include="Gesture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="F:\OpenCV\dep\opencv_contrib\modules\optflow\include\opencv2\optflow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HandRecognitionNN.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="F:\OpenCV\build\x64\vc15\lib\opencv_optflow450d.dll">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
