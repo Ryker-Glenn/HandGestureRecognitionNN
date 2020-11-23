@@ -13,7 +13,7 @@
 #define MAX_BV				255
 #define BI					1
 #define MOD					255
-#define THRESH1				0
+#define THRESH1				0.5
 #define THRESH2				0
 #define C1					6.5025		// Calculated as (k_1 * L)^2 where k_1 = 0.01 and L is 2^8 - 1
 #define C2					58.5225		// Calculated as (k_2 * L)^2 where k_2 = 0.03 and L is 2^8 - 1
@@ -37,7 +37,7 @@ private:
 	void update_mhi(const Mat&, Mat&);
 	void update_progress(const Mat&, Mat&);
 	void mod(const Mat&, Mat&);
-	void add(const Mat&, const Mat&);
+	Mat add(Mat&, Mat&, Mat&);
 	double structural_similarity(Mat&, Mat&);
 
 	double average(int, int);

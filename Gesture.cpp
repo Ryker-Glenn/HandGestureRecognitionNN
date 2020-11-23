@@ -6,7 +6,7 @@ void Gesture::capture() {
 	Mat frame, fgMask, fgBlur, fgThresh, merged_frame;
 	Ptr<BackgroundSubtractor> pBackSub;
 	pBackSub = createBackgroundSubtractorMOG2(false);			// trained NN from OpenCV used to remove everything not moving in the background
-	cap.open("gesture_tests/swipe_right.mp4");
+	cap.open("gesture_tests/swipe_left_Trim.mp4");
 	/*cap.open(0);*/ // Open webcam
 	while (true) {
 		cap >> frame;
@@ -19,14 +19,15 @@ void Gesture::capture() {
 																// background
 		threshold(fgBlur, fgThresh, 0, MAX_BV, BI);				// apply binary inverted threshold to the blurred frame
 		/*imshow("BI Blur FG Mask", fgThresh);*/
-		update_mhi(fgThresh, merged_frame);
+		//update_mhi(fgThresh, merged_frame);
 
-		imshow("mhi", merged_frame);
+		imshow("mhi", fgThresh);
 		// show video frame-by-frame
 		//get the input from the keyboard
 		if (waitKey(10) >= 0)
             break;
 	}
+	//imwrite("detected_gesture/swipe_left.png", merged_frame);
 }
 
 void Gesture::update_mhi(const Mat& img, Mat& dst) {
@@ -39,10 +40,10 @@ void Gesture::update_mhi(const Mat& img, Mat& dst) {
 		double similarity;
 		update_progress(img, progress_set);
 		mod(img, after_mod);
-		add(after_mod, dst);
+		dst = add(after_mod, progress_set, dst);	// after_mod is the all black img, dst should be the merged
 		similarity = structural_similarity(init_frame, dst);
 		if (abs(similarity - prev_sim) > THRESH1) {
-			prog++;
+			prog += 8;
 		}
 		prev_sim = similarity;
 	}
@@ -55,8 +56,27 @@ void Gesture::mod(const Mat& img, Mat& after) {
 	}
 }
 
-void Gesture::add(const Mat& mod, const Mat& merged) {
-	Mat src1(mod), src2(merged);
+Mat Gesture::add(Mat& modded, Mat& progress, Mat& merged) {
+	Mat dst = Mat::zeros(modded.size(), CV_8U);
+	dst.setTo(255);
+	uchar p, o, op;
+	// if black, black, black	keep black
+	// if black, black, grey	keep grey
+	// if black, white, white	keep white
+	// if black, grey, grey		keep lightest grey
+	// if black, grey, white	keep grey  
+	for (int i = 0; i < modded.cols * modded.rows; i++) {
+		p = modded.at<uchar>(i);
+		o = progress.at<uchar>(i);
+		op = merged.at<uchar>(i);
+		if (o != 255) {
+			dst.at<uchar>(i) = o;
+		}
+		if (op != 255) {
+			dst.at<uchar>(i) = op;
+		}
+	}
+	return dst;
 }
 
 double Gesture::structural_similarity(Mat& init, Mat& merged) {
