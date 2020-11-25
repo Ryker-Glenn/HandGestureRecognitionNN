@@ -60,11 +60,6 @@ Mat Gesture::add(Mat& modded, Mat& progress, Mat& merged) {
 	Mat dst = Mat::zeros(modded.size(), CV_8U);
 	dst.setTo(255);
 	uchar p, o, op;
-	// if black, black, black	keep black
-	// if black, black, grey	keep grey
-	// if black, white, white	keep white
-	// if black, grey, grey		keep lightest grey
-	// if black, grey, white	keep grey  
 	for (int i = 0; i < modded.cols * modded.rows; i++) {
 		p = modded.at<uchar>(i);
 		o = progress.at<uchar>(i);
