@@ -150,6 +150,7 @@
     <ClInclude Include="F:\OpenCV\dep\opencv_contrib\modules\optflow\include\opencv2\optflow.hpp" />
     <ClInclude Include="Gesture.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Similarity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HandRecognitionNN.rc" />
