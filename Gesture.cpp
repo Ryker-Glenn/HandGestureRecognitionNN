@@ -5,9 +5,9 @@ Gesture::Gesture() {}
 void Gesture::capture() {
 	Mat frame, fgMask, fgBlur, fgThresh, merged_frame;
 	Ptr<BackgroundSubtractor> pBackSub;
-	pBackSub = createBackgroundSubtractorMOG2(false);			// trained NN from OpenCV used to remove everything not moving in the background
-	cap.open("gesture_tests/swipe_left_Trim.mp4");
-	/*cap.open(0);*/ // Open webcam
+	pBackSub = createBackgroundSubtractorKNN(false);			// trained NN from OpenCV used to remove everything not moving in the background
+	cap.open("gesture_tests/test2.mp4");
+	//cap.open(0); 
 	while (true) {
 		cap >> frame;
 		if (frame.empty()) { break; }
