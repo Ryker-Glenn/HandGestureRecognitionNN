@@ -41,7 +41,7 @@ void Gesture::update_mhi(const Mat& img, Mat& dst) {
 		update_progress(img, progress_set);
 		mod(img, after_mod);
 		dst = add(after_mod, progress_set, dst);	// after_mod is the all black img, dst should be the merged
-		similarity = structural_similarity(init_frame, dst);
+		similarity = Similarity::ssim(init_frame, dst);
 		if (abs(similarity - prev_sim) > THRESH1) {
 			prog += 8;
 		}
@@ -79,24 +79,6 @@ Mat Gesture::add(Mat& modded, Mat& progress, Mat& merged) {
 	return dst;
 }
 
-double Gesture::structural_similarity(Mat& init, Mat& merged) {
-	int px_init = 0, px_merged = 0, total = 0;
-	double avg_init, avg_merged;
-	long variance_init, variance_merged, covar;
-	for (int y = 0; y < init.cols * init.rows; y++) {
-		total++;
-		px_init += init.at<uchar>(y);
-		px_merged += merged.at<uchar>(y);
-	}
-	avg_init = average(px_init, total);
-	avg_merged = average(px_merged, total);
-	variance_init = variance(init, avg_init, total);
-	variance_merged = variance(merged, avg_merged, total);
-	covar = covariance(init, merged, avg_init, avg_merged, total);
-
-	return ssim(avg_init, avg_merged, covar, variance_init, variance_merged);
-}
-
 void Gesture::update_progress(const Mat& img, Mat& progress) {
 	const int nChannels = img.channels();
 	progress = Mat::zeros(img.size(), CV_8U);
@@ -107,38 +89,4 @@ void Gesture::update_progress(const Mat& img, Mat& progress) {
 			progress.at<uchar>(i) = prog;
 		}
 	}
-}
-
-double Gesture::average(int colors, int pixels) {
-	return colors / pixels;
-}
-
-long Gesture::variance(const Mat& img, double avg, int ct) {
-	long sum = 0;
-	for (int y = 0; y < img.cols * img.rows; y++) {
-		sum += square(img.at<uchar>(y) - avg);
-	}
-	return sum / (long)ct;
-}
-
-long Gesture::covariance(const Mat& init, const Mat& merged, double avg_init, double avg_merged, int ct) {
-	long sum = 0;
-	for (int y = 0; y < init.cols * init.rows; y++) {
-		sum += (init.at<uchar>(y) - avg_init) * (merged.at<uchar>(y) - avg_merged);
-		
-	}
-	return sum / ((long)ct - 1);
-}
-
-long Gesture::square(long diff) {
-	return diff * diff;
-}
-
-long Gesture::ssim(long avg_x, long avg_y, long covar, long var_x, long var_y) {
-	long tl = (2 * avg_x * avg_y) + C1;
-	long tr = (2 * covar) + C2;
-	long bl = square(avg_x) + square(avg_y) + C1;
-	long br = var_x + var_y + C2;
-
-	return (tl * tr) / (bl * br);
 }
