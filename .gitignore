@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/gesture_tests/a.mp4
+/gesture_tests/b.mp4
