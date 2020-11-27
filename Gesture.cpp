@@ -26,14 +26,14 @@ void Gesture::capture() {
 
 void Gesture::update_mhi(Mat& img, Mat& dst) {
 	if (dst.size() != img.size()) {
-		dst = img.clone();
+		dst = Mat::zeros(img.size(), CV_8U);
+		dst.setTo(255);
 	}
 	else {
 		Mat after_mod, init_frame(img);
 		double similarity;
 		update_progress(img);
-		after_mod = mod(img);
-		add(after_mod, dst);	
+		add(img, dst);	
 		similarity = ssim(init_frame, dst);
 		if (abs(similarity - prev_sim) > THRESH1)
 			prog += 5;
@@ -42,18 +42,11 @@ void Gesture::update_mhi(Mat& img, Mat& dst) {
 	}
 }
 
-Mat Gesture::mod(const Mat& img) {
-	Mat after(img);
-	for (int y = 0; y < img.cols * img.rows; y++) 
-		after.at<uchar>(y) = img.at<uchar>(y) % MAX_COLOR;
-
-	return after;
-}
-
-void Gesture::add(Mat& modded, Mat& merged) {
-	for (int i = 0; i < modded.cols * modded.rows; i++) {
-		if (merged.at<uchar>(i) != modded.at<uchar>(i))
-			merged.at<uchar>(i) = modded.at<uchar>(i);
+void Gesture::add(Mat& current, Mat& merged) {
+	for (int i = 0; i < current.cols * current.rows; i++) {
+		if (current.at<uchar>(i) != 255) {
+			merged.at<uchar>(i) = current.at<uchar>(i);
+		}
 	}
 }
 

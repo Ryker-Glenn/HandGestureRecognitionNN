@@ -25,8 +25,7 @@ public:
 	void capture();
 private:
 	void update_mhi(Mat&, Mat&);
-	void update_progress(Mat&);
-	Mat mod(const Mat&);		
+	void update_progress(Mat&);	
 	void add(Mat&, Mat&);
 
 	/* utility functions used to determine structural 
