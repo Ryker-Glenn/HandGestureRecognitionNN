@@ -36,8 +36,8 @@ void Gesture::capture() {
 
 void Gesture::update_mhi(Mat& img, Mat& dst) {
 	if (dst.size() != img.size()) {
-		dst = Mat::zeros(img.size(), CV_8U);	// The code will reach here if it's the first frame
-		dst.setTo(255);							// and the mhi hasn't been created yet
+		dst = Mat::zeros(img.size(), CV_8U);	/* The code will reach here if it's the first *
+		dst.setTo(255);							 * frame and the mhi hasn't been created yet  */
 	}
 	else {
 		Mat after_mod, init_frame(img);
@@ -74,7 +74,6 @@ double Gesture::sq(double to_sq)	   {	    return to_sq * to_sq; }
 double Gesture::ssim(const Mat& img, const Mat& merged) {
 	// used to get total numerical count of pixels to find average of pixel variance
 	int px_init = 0, px_merged = 0, total = img.cols * img.rows;
-	double similarity;
 	for (int y = 0; y < total; y++) {
 		px_init += img.at<uchar>(y);
 		px_merged += merged.at<uchar>(y);
@@ -92,10 +91,10 @@ double Gesture::calc_variances_similarity(const Mat& img, const Mat& merged, dou
 		sum_cv += (img.at<uchar>(y) - avx) * (merged.at<uchar>(y) - avy);
 	}
 
-	double tl = (2 * avx * avy) + C1;						// tl and bl are top/bottom left of structural similarity eqxn
-	double bl = sq(avx) + sq(avy) + C1;						// which calculates luminance
-	double tr = (2 * (sum_cv / n_ct)) + C2;					// while top/bottom right calculate contrast
-	double br = (sum_vx / n_ct) + (sum_vy / n_ct) + C2;		// this equation allows calculation of structural simularity
+	double tl = (2 * avx * avy) + C1;									// tl and bl are top/bottom left of structural similarity eqxn
+	double bl = sq(avx) + sq(avy) + C1;									// which calculates luminance
+	double tr = (2 * (double)(sum_cv / n_ct)) + C2;						// while top/bottom right calculate contrast
+	double br = (double)(sum_vx / n_ct) + (double)(sum_vy / n_ct) + C2;	// this equation allows calculation of structural simularity
 
 	return (tl * tr) / (bl * br);
 }
