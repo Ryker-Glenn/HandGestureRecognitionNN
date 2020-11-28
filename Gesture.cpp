@@ -6,8 +6,8 @@ void Gesture::capture() {
 	VideoCapture cap;
 	Mat frame, fgMask, fgBlur, fgThresh, merged_frame;
 	Ptr<BackgroundSubtractor> pBackSub = createBackgroundSubtractorMOG2();
-	cap.open("gesture_tests/b.mp4"); 
-	//cap.open(0);
+	//cap.open("gesture_tests/b.mp4"); 
+	cap.open(0);
 	while (true) {
 		cap >> frame;
 		if (frame.empty()) { break; }
@@ -31,20 +31,20 @@ void Gesture::capture() {
             break;
 	}
 	// writes the image to a file just in case its needed later
-	//imwrite("detected_gesture/swipe_left.png", merged_frame);
+	imwrite("detected_gesture/swipe_down.png", merged_frame);
 }
 
 void Gesture::update_mhi(Mat& img, Mat& dst) {
 	if (dst.size() != img.size()) {
-		dst = Mat::zeros(img.size(), CV_8U);	/* The code will reach here if it's the first *
-		dst.setTo(255);							 * frame and the mhi hasn't been created yet  */
+		dst = Mat::zeros(img.size(), CV_8U);	// The code will reach here if it's the first
+		dst.setTo(255);							// frame and the mhi hasn't been created yet  
 	}
 	else {
 		Mat after_mod, init_frame(img);
 		update_progress(img);
 		dst = add(img, dst);	
 		double similarity = ssim(init_frame, dst);
-		if (abs(similarity - prev_sim) > THRESH1)
+		if (abs(similarity - prev_sim) > 0.1)
 			prog += 8;
 
 		prev_sim = similarity;
