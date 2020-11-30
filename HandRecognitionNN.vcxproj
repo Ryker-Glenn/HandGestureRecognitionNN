@@ -147,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NeuralNetwork\NeuralNetwork\NN.h" />
-    <ClInclude Include="F:\OpenCV\dep\opencv_contrib\modules\optflow\include\opencv2\optflow.hpp" />
     <ClInclude Include="Gesture.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -4,7 +4,7 @@ Gesture::Gesture() {}
 
 void Gesture::capture() {
 	VideoCapture cap;
-	Mat frame, fgMask, fgBlur, fgThresh, merged_frame;
+	Mat frame, fgMask, fgBlur, fgThresh, merged_frame, resized;
 	Ptr<BackgroundSubtractor> pBackSub = createBackgroundSubtractorMOG2();
 	//cap.open("gesture_tests/b.mp4"); 
 	cap.open(0);
@@ -31,7 +31,8 @@ void Gesture::capture() {
             break;
 	}
 	// writes the image to a file just in case its needed later
-	imwrite("detected_gesture/swipe_down.png", merged_frame);
+	resize(merged_frame, resized, Size(), 100, 56);
+	imwrite("detected_gesture/swipe_down.png", resized);
 }
 
 void Gesture::update_mhi(Mat& img, Mat& dst) {
